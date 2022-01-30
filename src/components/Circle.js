@@ -51,29 +51,7 @@ const Circle = () => {
             console.log(err);
         }
     }
-    const checkWalletConnected = async () => {
-        try{
-            const {ethereum} = window;
-            if (ethereum) {
-                console.log('ethereum is connected : ', ethereum.isConnected());
-                
-            } else {
-                console.log('ethereum is not connected; get metamask');
-            }
-        
-            const accountList = await ethereum.request({method: 'eth_accounts'});
-            if(accountList.length!==0){
-                const account = accountList[0];
-                setCurrentAccount(account);
-                getAllMembers();
-                
-            }else{
-                console.log('no account found');
-            }
-        }catch(err){
-            console.log(err);
-        }
-    }
+   
      useEffect(() => {
         let socialCircleContract;
         const oneNewMember = (from, timestamp, message) => {
@@ -140,6 +118,29 @@ const Circle = () => {
         }
     }
     useEffect(() => {
+        const checkWalletConnected = async () => {
+            try{
+                const {ethereum} = window;
+                if (ethereum) {
+                    console.log('ethereum is connected : ', ethereum.isConnected());
+                    
+                } else {
+                    console.log('ethereum is not connected; get metamask');
+                }
+            
+                const accountList = await ethereum.request({method: 'eth_accounts'});
+                if(accountList.length!==0){
+                    const account = accountList[0];
+                    setCurrentAccount(account);
+                    getAllMembers();
+                    
+                }else{
+                    console.log('no account found');
+                }
+            }catch(err){
+                console.log(err);
+            }
+        };
         checkWalletConnected();
     },[]);
     
